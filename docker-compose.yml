@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14
+    container_name: go_crud_db
+    environment:
+      POSTGRES_DB: campo
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: usuario_admin
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - go_crud_network
+
+  # Puedes agregar más servicios, como la aplicación Go si es necesario
+
+networks:
+  go_crud_network:
+    driver: bridge
+
+volumes:
+  pgdata:
+    driver: local
