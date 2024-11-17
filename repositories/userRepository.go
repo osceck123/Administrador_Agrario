@@ -1,6 +1,8 @@
 package repositories
 
 import (
+	"fmt"
+
 	utils "github.com/osceck123/CRUD/config"
 	"github.com/osceck123/CRUD/models"
 )
@@ -48,7 +50,9 @@ func DeleteUser(id uint) error {
 }
 func GetUserByEmail(Email string) (*models.User, error) {
 	var user models.User
-	if err := utils.DB.First(&user, Email).Error; err != nil {
+	fmt.Println(Email, "que tiene email")
+	// Buscar por el campo Email utilizando la condición correcta
+	if err := utils.DB.Where("email = ?", Email).First(&user).Error; err != nil {
 		return nil, err
 	}
 	return &user, nil
