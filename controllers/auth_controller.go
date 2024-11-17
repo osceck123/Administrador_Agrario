@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -21,6 +22,7 @@ func Login(c *gin.Context) {
 
 	// Verificar las credenciales
 	user, err := services.GetUserByEmail(loginDTO.Email)
+	fmt.Print(user, "que tiene user")
 	if err != nil || !utils.CheckPasswordHash(loginDTO.Password, user.PasswordHash) {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
 		return

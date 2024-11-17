@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	"github.com/osceck123/CRUD/dto"
 	"github.com/osceck123/CRUD/models"
 	"github.com/osceck123/CRUD/repositories"
@@ -17,13 +19,29 @@ func ConvertToUserDTO(user models.User) dto.UserDTO {
 
 // CreateUser crea un usuario
 func CreateUser(user_dto *dto.CreateUserDTO) (*models.User, error) {
-	var user *models.User
-	user.LastName = user_dto.LastName
-	user.Email = user_dto.Email
-	user.FirstName = user_dto.FirstName
-	utils.HashPassword(user_dto.Password, 1)
+	// Inicializar la estructura de usuario
+	user := &models.User{
+		LastName:  user_dto.LastName,
+		Email:     user_dto.Email,
+		FirstName: user_dto.FirstName,
+	}
 
-	return repositories.CreateUser(user)
+	// Hashear la contraseña
+	pass, err := utils.HashPassword(user_dto.Password, 4)
+	if err != nil {
+		return nil, fmt.Errorf("error al hashear la contraseña: %w", err)
+	}
+
+	// Asignar el hash de la contraseña
+	user.PasswordHash = pass
+
+	// Crear el usuario en el repositorio
+	createdUser, err := repositories.CreateUser(user)
+	if err != nil {
+		return nil, fmt.Errorf("error al crear el usuario: %w", err)
+	}
+
+	return createdUser, nil
 }
 
 // GetUserByID obtiene un usuario por ID

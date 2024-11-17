@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -14,6 +15,7 @@ import (
 // CreateUser crea un nuevo usuario
 func CreateUser(c *gin.Context) {
 	var user dto.CreateUserDTO
+	fmt.Print(&user, `usuario`)
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
