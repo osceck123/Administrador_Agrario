@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt"
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/osceck123/CRUD/dto"
 	"github.com/osceck123/CRUD/models"
 	"github.com/osceck123/CRUD/services"

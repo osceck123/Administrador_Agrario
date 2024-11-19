@@ -34,7 +34,7 @@ func main() {
 	protected := router.Group("/")
 	protected.Use(middleware.JWTAuthMiddleware())
 	{
-		protected.GET("/profile", controllers.GetUserByID) // Ejemplo de ruta protegida
+		protected.GET("/profile", controllers.GetUserProfile) // Ejemplo de ruta protegida
 	}
 
 	// Iniciar el servidor
